@@ -2,24 +2,28 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
+interface Service {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  is_free: boolean;
+  price: string;
+}
+
 export default function ServicesPage() {
-  const [services, setServices] = useState<any[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/services`)
-      .then((res) => {
-        console.log("Status:", res.status);
-        return res.json();
-      })
-      .then((data) => {
-        console.log("Data received:", data);
+      .then((res) => res.json())
+      .then((data: Service[]) => {
         setServices(Array.isArray(data) ? data : []);
         setLoading(false);
       })
-      .catch((err) => {
-        console.error("Fetch error:", err);
+      .catch((err: Error) => {
         setError(err.message);
         setLoading(false);
       });
@@ -58,7 +62,7 @@ export default function ServicesPage() {
             gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
             gap: "1.5rem",
           }}>
-            {services.map((service: any) => (
+            {services.map((service) => (
               <div key={service.id} style={{
                 backgroundColor: "#0d1526",
                 border: "1px solid #1a2535",
