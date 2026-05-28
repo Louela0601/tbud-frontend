@@ -1,101 +1,206 @@
-import Image from "next/image";
+"use client";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/services`)
+      .then((res) => res.json())
+      .then((data) => setServices(data))
+      .catch(() => {});
+  }, []);
+
+  const stats = [
+    { value: "4", label: "Services Offered" },
+    { value: "3", label: "Team Members" },
+    { value: "FREE", label: "All Services" },
+    { value: "2026", label: "Founded" },
+  ];
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <main style={{ backgroundColor: "#0a0f1a", minHeight: "100vh", color: "white" }}>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* HERO SECTION */}
+      <section style={{
+        minHeight: "90vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "4rem 6rem",
+        gap: "2rem",
+      }}>
+        <div style={{ maxWidth: "600px" }}>
+          <div style={{
+            display: "inline-block",
+            border: "1px solid #ffffff40",
+            borderRadius: "999px",
+            padding: "0.4rem 1rem",
+            fontSize: "0.85rem",
+            marginBottom: "1.5rem",
+            color: "#ffffffcc",
+          }}>
+            Meet Tio — Your Digital Buddy
+          </div>
+          <h1 style={{ fontSize: "3.5rem", fontWeight: "900", lineHeight: 1.1, marginBottom: "1.5rem" }}>
+            Your Digital Buddy,<br />Always Ready.
+          </h1>
+          <p style={{ fontSize: "1.1rem", color: "#ffffffaa", marginBottom: "2rem", lineHeight: 1.7 }}>
+            T-Bud delivers modern IT services for everyone.<br />
+            Simple, fast, and completely free.
+          </p>
+          <div style={{ display: "flex", gap: "1rem" }}>
+            <Link href="/services" style={{
+              backgroundColor: "#00d4ff",
+              color: "#0a0f1a",
+              padding: "0.75rem 1.75rem",
+              borderRadius: "8px",
+              fontWeight: "700",
+              textDecoration: "none",
+              fontSize: "1rem",
+            }}>
+              Explore Services
+            </Link>
+            <Link href="/about" style={{
+              backgroundColor: "transparent",
+              color: "white",
+              padding: "0.75rem 1.75rem",
+              borderRadius: "8px",
+              fontWeight: "700",
+              textDecoration: "none",
+              fontSize: "1rem",
+              border: "2px solid #ffffff40",
+            }}>
+              Meet Tio
+            </Link>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        {/* Bud Mascot placeholder */}
+        <div style={{
+          width: "420px",
+          height: "420px",
+          border: "1px solid #1a2535",
+          borderRadius: "16px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "6rem",
+          flexShrink: 0,
+          backgroundColor: "#0d1526",
+        }}>
+          🦜
+        </div>
+      </section>
+
+      {/* STATS SECTION */}
+      <section style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(4, 1fr)",
+        gap: "1rem",
+        padding: "2rem 6rem",
+        borderTop: "1px solid #1a2535",
+        borderBottom: "1px solid #1a2535",
+      }}>
+        {stats.map((stat) => (
+          <div key={stat.label} style={{
+            backgroundColor: "#0d1526",
+            border: "1px solid #1a2535",
+            borderRadius: "12px",
+            padding: "2rem",
+            textAlign: "center",
+          }}>
+            <div style={{ fontSize: "2.5rem", fontWeight: "900", color: "#00d4ff", marginBottom: "0.5rem" }}>
+              {stat.value}
+            </div>
+            <div style={{ color: "#ffffffaa", fontSize: "0.95rem" }}>{stat.label}</div>
+          </div>
+        ))}
+      </section>
+
+      {/* WHAT WE OFFER SECTION */}
+      <section style={{ padding: "5rem 6rem" }}>
+        <h2 style={{ textAlign: "center", fontSize: "2.5rem", fontWeight: "800", marginBottom: "3rem" }}>
+          What We Offer
+        </h2>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+          gap: "1.5rem",
+        }}>
+          {services.length > 0 ? services.map((service: any) => (
+            <div key={service.id} style={{
+              backgroundColor: "#0d1526",
+              border: "1px solid #1a2535",
+              borderRadius: "12px",
+              padding: "1.5rem",
+            }}>
+              <h3 style={{ color: "#00d4ff", fontWeight: "700", marginBottom: "0.5rem" }}>{service.title}</h3>
+              <p style={{ color: "#ffffffaa", fontSize: "0.9rem", marginBottom: "1rem" }}>{service.description}</p>
+              <span style={{
+                backgroundColor: "#00d4ff20",
+                color: "#00d4ff",
+                border: "1px solid #00d4ff50",
+                padding: "0.25rem 0.75rem",
+                borderRadius: "999px",
+                fontSize: "0.8rem",
+                fontWeight: "600",
+              }}>
+                {service.is_free ? "FREE" : `₱${service.price}`}
+              </span>
+            </div>
+          )) : (
+            // Placeholder cards while loading
+            ["Graphic & Creative", "Educational & Training", "Social Media & Marketing", "Online Business"].map((title) => (
+              <div key={title} style={{
+                backgroundColor: "#0d1526",
+                border: "1px solid #1a2535",
+                borderRadius: "12px",
+                padding: "1.5rem",
+              }}>
+                <h3 style={{ color: "#00d4ff", fontWeight: "700", marginBottom: "0.5rem" }}>{title}</h3>
+                <p style={{ color: "#ffffffaa", fontSize: "0.9rem", marginBottom: "1rem" }}>Design that stands out</p>
+                <span style={{
+                  backgroundColor: "#00d4ff20",
+                  color: "#00d4ff",
+                  border: "1px solid #00d4ff50",
+                  padding: "0.25rem 0.75rem",
+                  borderRadius: "999px",
+                  fontSize: "0.8rem",
+                  fontWeight: "600",
+                }}>FREE</span>
+              </div>
+            ))
+          )}
+        </div>
+      </section>
+
+      {/* CTA BANNER */}
+      <section style={{
+        background: "linear-gradient(135deg, #0066cc, #00d4ff)",
+        padding: "4rem 6rem",
+        textAlign: "center",
+      }}>
+        <h2 style={{ fontSize: "2rem", fontWeight: "800", marginBottom: "2rem" }}>
+          All T-Bud services are FREE — Start your digital journey today!
+        </h2>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1.5rem" }}>
+          <span style={{ fontSize: "3rem" }}>🦜</span>
+          <Link href="/contact" style={{
+            backgroundColor: "white",
+            color: "#0066cc",
+            padding: "0.85rem 2.5rem",
+            borderRadius: "8px",
+            fontWeight: "700",
+            textDecoration: "none",
+            fontSize: "1.1rem",
+          }}>
+            Get Started Free
+          </Link>
+        </div>
+      </section>
+
+    </main>
   );
 }
