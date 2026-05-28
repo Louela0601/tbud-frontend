@@ -2,8 +2,16 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
+interface Service {
+  id: string;
+  title: string;
+  description: string;
+  is_free: boolean;
+  price: string;
+}
+
 export default function HomePage() {
-  const [services, setServices] = useState([]);
+  const [services, setServices] = useState<Service[]>([]);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/services`)
@@ -17,6 +25,13 @@ export default function HomePage() {
     { value: "3", label: "Team Members" },
     { value: "FREE", label: "All Services" },
     { value: "2026", label: "Founded" },
+  ];
+
+  const placeholders = [
+    "Graphic & Creative",
+    "Educational & Training",
+    "Social Media & Marketing",
+    "Online Business"
   ];
 
   return (
@@ -77,7 +92,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Bud Mascot placeholder */}
         <div style={{
           width: "420px",
           height: "420px",
@@ -129,7 +143,7 @@ export default function HomePage() {
           gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
           gap: "1.5rem",
         }}>
-          {services.length > 0 ? services.map((service: any) => (
+          {services.length > 0 ? services.map((service) => (
             <div key={service.id} style={{
               backgroundColor: "#0d1526",
               border: "1px solid #1a2535",
@@ -150,29 +164,26 @@ export default function HomePage() {
                 {service.is_free ? "FREE" : `₱${service.price}`}
               </span>
             </div>
-          )) : (
-            // Placeholder cards while loading
-            ["Graphic & Creative", "Educational & Training", "Social Media & Marketing", "Online Business"].map((title) => (
-              <div key={title} style={{
-                backgroundColor: "#0d1526",
-                border: "1px solid #1a2535",
-                borderRadius: "12px",
-                padding: "1.5rem",
-              }}>
-                <h3 style={{ color: "#00d4ff", fontWeight: "700", marginBottom: "0.5rem" }}>{title}</h3>
-                <p style={{ color: "#ffffffaa", fontSize: "0.9rem", marginBottom: "1rem" }}>Design that stands out</p>
-                <span style={{
-                  backgroundColor: "#00d4ff20",
-                  color: "#00d4ff",
-                  border: "1px solid #00d4ff50",
-                  padding: "0.25rem 0.75rem",
-                  borderRadius: "999px",
-                  fontSize: "0.8rem",
-                  fontWeight: "600",
-                }}>FREE</span>
-              </div>
-            ))
-          )}
+          )) : placeholders.map((title) => (
+            <div key={title} style={{
+              backgroundColor: "#0d1526",
+              border: "1px solid #1a2535",
+              borderRadius: "12px",
+              padding: "1.5rem",
+            }}>
+              <h3 style={{ color: "#00d4ff", fontWeight: "700", marginBottom: "0.5rem" }}>{title}</h3>
+              <p style={{ color: "#ffffffaa", fontSize: "0.9rem", marginBottom: "1rem" }}>Design that stands out</p>
+              <span style={{
+                backgroundColor: "#00d4ff20",
+                color: "#00d4ff",
+                border: "1px solid #00d4ff50",
+                padding: "0.25rem 0.75rem",
+                borderRadius: "999px",
+                fontSize: "0.8rem",
+                fontWeight: "600",
+              }}>FREE</span>
+            </div>
+          ))}
         </div>
       </section>
 
